@@ -1,3 +1,8 @@
+Okay so just to go over it, first we main function that runs. In main it will run ITS_ALIVE with a while loop. In keep alive function it gets x/y value from the knobs which is then translated into x/y coordinates with (PercentRead/MaxDuty)*((2*max arm length)-(max arm length)=x/ycord Then using x/y cord we run inverse kinematics where they get translated into theta 1 and theta 2 (we will include a function to return them as none if the angles are bad.) After that we will use set_safe_angle for both thetas. In set_safe_angle the angles are checked to be in allowed range then, then inside safe angle translate runs (we may put an extra redundancy in that) then after translate set_safe_duty will run where it checks the duty cycles are in range before finally setting them to the appropriate pwm pins. After those are updated pen control runs which checks if the button is pressed. Assuming everything works there will be virtually no delay between pressing then pen button and changing the pen. 
+
+
+
+
 SKELTON CODE:
 from machine import PWM, Pin, ADC
 import math
@@ -27,6 +32,9 @@ We will define multiple items to have max and min. Each arm will have one and we
 
 
 #FUNctions :)
+
+
+
 #Safety functions for duty and angle conversions
 def safe_duty(servo, duty):
 #Make sure the angle is within the range of 0 to 180 degrees
@@ -35,12 +43,18 @@ def safe_duty(servo, duty):
     else:
         Return
 Okay so this is just basic code. Basically this makes sure that the max and min distance are being respected. If they are, the duty is set, if not, it returns and does not implement the change. 
+
+
+
+
 #Make sure angle set safe
 def safe_angle(servo, angle):
     if 0 <= angle <= 180:
         duty = translate(angle)
         safe_duty(servo, duty)
 This one makes sure the angle is not above or below 0 and 180 respectively. If it works the translate function runs and translates the 
+
+
 
 ###############################
 def inverse_kinematics(x_cord, y_cord):
@@ -58,6 +72,9 @@ def inverse_kinematics(x_cord, y_cord):
 Use inverse Kin to find the right shoulder angle 
         return (theta1), (theta2)
 Return the right value
+
+
+
 ##########################################
 def translate(angle: float) -> int:
 This one is going to be longer but a bit less challenging. It should be roughly the same as the translate function we made in a lab. Essentially we need to take the angles we got from inverse kin and make those into a duty cycle to later use.
@@ -70,11 +87,22 @@ Just some basic code. X_value, y_value = the reduced value from the potentiomete
     
     
      return x_value, y_value
+
+
+
 ################Set up pen control (up and down)
 In here we will define what the pen needs to work, aka a button, a pull down, a way to make sure the button gets chcked
+
+
+
+
 ##########
 def pen_control():
 Make the pen go up and down. If the button got turned on and was previously on switch to the “down”/”up” duty cycle. 
+
+
+
+
 ######################################################33
 def ITS_ALIVE():
     print("The robot arm is alive and ready to move!")
@@ -96,9 +124,11 @@ Actually gets the value we will use for mapping used the reader function.
 I forgot to mention if theta 1 or 2 is not allowed it will out as none. Literally none, not no value.
     safe_angle()
     safe_angle()
+
+
 Using the safe angle to make sure its good. This also sets the duty cycle because set safe duty is ran inside safe angle,
     #PEN!
-    pen_control() Just make the damn pengo. 
+    pen_control() Just make the damn pen go. 
 
 def main():
     Main entry point to run the robotic arm control.
@@ -112,5 +142,4 @@ As you can see in the comment, it kinda just added but I like how it looks and i
 
 
 
-GIT HUB: https://github.com/arabs5959/SED1115-GP-7/issues?q=is%3Aissue+state%3Aopen 
 Everything is in and assigned. I am waiting on one person to accept the invite to the new repository (last one wouldn’t let me upload to it.) So whatever is not assigned is being worked on by the last member of our group.
