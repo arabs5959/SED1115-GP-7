@@ -3,7 +3,8 @@ import math
 import time
 
 #Arm length
-
+L1 =
+L2 =
 
 #Set up the pins for the knobs to controll the arm
 x_axis =
@@ -12,17 +13,27 @@ y_axis =
 
 
 #PWM for shoulder and elbow servos
-
-
+shoulder_pwm = 
+elbow_pwm = 
 
 # Set PWM frequency for arm
 
 
 
 # min and max duty cycles
+D_MIN =
+D_MAX =
+PEN_UP =
+PEN_DOWN =
+
 
 
 #FUNctions :)
+
+
+
+
+
 #Saftey functions for duty and angle conversions
 def safe_duty(servo, duty):
 #Make sure the angle is within the range of 0 to 180 degrees
@@ -61,8 +72,21 @@ def read_knobs():
 ################Set up pen control (up and down)
 
 ##########
+pen_switch = Pin(12, Pin.IN, Pin.PULL_DOWN) 
+pen_pwm = PWM(Pin(2))
+pen_pwm.freq(50)  # Standard servo frequency 50 Hz
+pen_write = False # False = up, True = down
+last_pen_button_state = 0
+##########
 def pen_control():
-
+     global pen_write, last_pen_button_state
+     current_pen_button_state = pen_switch.value()
+     if current_pen_button_state == 1 and last_pen_button_state == 0: #have it like this to actaully see its pressed!
+            pen_write = not pen_write  #toggle the pen state
+            print(f"Pen state changed: {'Ready!' if pen_write else 'Waiting!'}")
+            pen_state = PEN_DOWN if pen_write else PEN_UP
+            safe_duty(pen_pwm, pen_state)
+    
      last_pen_button_state = current_pen_button_state
 ######################################################33
 def ITS_ALIVE():
@@ -79,8 +103,8 @@ def ITS_ALIVE():
     if theta1 is None or theta2 is None:
         return
 
-    safe_angle()
-    safe_angle()
+    safe_angle(shoulder_pwm, theta1)
+    safe_angle(elbow_pwm, theta2)
 
     #PEN!
     pen_control()  # Set the initial pen state
