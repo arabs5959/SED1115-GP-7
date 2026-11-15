@@ -1,3 +1,11 @@
+Real quick GitHub was not acting nice so the most recent version was pushed to master instead of main. I am not sure what I am doing wrong but its something.
+
+
+
+
+
+
+
 Okay so just to go over it, first we main function that runs. In main it will run ITS_ALIVE with a while loop. In keep alive function it gets x/y value from the knobs which is then translated into x/y coordinates with (PercentRead/MaxDuty)*((2*max arm length)-(max arm length)=x/ycord Then using x/y cord we run inverse kinematics where they get translated into theta 1 and theta 2 (we will include a function to return them as none if the angles are bad.) After that we will use set_safe_angle for both thetas. In set_safe_angle the angles are checked to be in allowed range then, then inside safe angle translate runs (we may put an extra redundancy in that) then after translate set_safe_duty will run where it checks the duty cycles are in range before finally setting them to the appropriate pwm pins. After those are updated pen control runs which checks if the button is pressed. Assuming everything works there will be virtually no delay between pressing then pen button and changing the pen. 
 
 
