@@ -53,7 +53,7 @@ def inverse_kinematics(x_cord, y_cord):
     distance = math.sqrt(x_cord**2 + y_cord**2)
     #make sure the targets in reach
     if  (distance > (L1 + L2) or distance < abs(L1 - L2)):
-            return None, None
+            return None, None #that can be used later in Its_Alive. If the distance is out of reach the arms wont update
     else:
 
     #calculate elbow angle (theta2)
