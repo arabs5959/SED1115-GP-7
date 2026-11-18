@@ -130,10 +130,17 @@ def circle (file_path_1): #BORROWED FROM LAB 7
                         x_value = float(part[1:])
                     elif part.startswith('E'):
                         y_value = float(part[1:])
+
+                #lines 135-138 is taking x-value and y_value straight from the G-code file and feeds them directly into safe_angles() as if they were already servo angles (degrees) 
+                #The reason this fails is because G-code coordinates (x, y) are not angles. When the G-code says to move to X =90 and Y = 120, feeding those numbers directly into safe_angle means the arm will try to move to a 90-degree shoulder angle and a 120-degree elbow angle - which has nothing to do with the actual geometry of a circle on the page, and could aswell force the arm to go past its physical limits. 
+    
                 if x_value != 0.00 and y_value != 0.00:
                     print(f"Line {line_num}: X =", translate(x_value), "Y =", translate(y_value))
                     safe_angle(shoulder_pwm, x_value)
                     safe_angle(elbow_pwm, y_value)
+
+
+            
             if line.startswith('M'):
                 if 'M3' in line:
                     print("Pen Down")
