@@ -1,4 +1,11 @@
-Real quick GitHub was not acting nice so the most recent version was pushed to master instead of main. I am not sure what I am doing wrong but its something.
+On 11-17-2026 my group worked up on finishing the last of the issues and I just dropped in the completed file. Yes a lot changed but it changed because we were all there to talk about stuff and make sure variables are the same. I also copied in code from another lab where we made a g-code reader. Now  we can also make a circle on command, if it would work right.
+
+
+
+
+
+
+
 
 
 
